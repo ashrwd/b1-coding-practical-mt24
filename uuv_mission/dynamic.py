@@ -1,6 +1,7 @@
 from __future__ import annotations
 from dataclasses import dataclass
 import numpy as np
+import pandas as pd
 import matplotlib.pyplot as plt
 import csv
 from terrain import generate_reference_and_limits
@@ -76,11 +77,11 @@ class Mission:
 
     @classmethod
     def from_csv(cls, file_name: str):
-        data = np.genfromtxt(file_name, delimiter=',', skip_header=1)
+        data = pd.read_csv(file_name, delimiter=',')
 
-        reference = data[:,0]
-        cave_height = data[:,1]
-        cave_depth = data[:,2]
+        reference = data['reference'].to_list()
+        cave_height = data['cave_height'].to_list()
+        cave_depth = data['cave_depth'].to_list()
         return cls(reference, cave_height, cave_depth)
 
 
